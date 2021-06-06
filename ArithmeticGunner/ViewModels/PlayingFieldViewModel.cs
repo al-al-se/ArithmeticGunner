@@ -9,7 +9,25 @@ namespace ArithmeticGunner.ViewModels
         public PlayingFieldViewModel()
         {
             Model = new ArithmeticGunner.Models.PlayingFieldModel();
-            UpdateFromModel();
+
+            this.WhenAnyValue(x => x.Model.OperationData.Arg1)
+                            .Subscribe(x => Arg1 = x.ToString());
+
+            this.WhenAnyValue(x => x.Model.OperationData.CurrentOperationStr)
+                            .Subscribe(x => Operation = x);
+
+            this.WhenAnyValue(x => x.Model.OperationData.Arg2)
+                            .Subscribe(x => Arg2 = x.ToString());
+
+            this.WhenAnyValue(x => x.Model.Level)
+                            .Subscribe(x => Level = $"Level:{x.ToString()}");
+
+            this.WhenAnyValue(x => x.Model.Lives)
+                            .Subscribe(x => Lives = x);
+
+            this.WhenAnyValue(x => x.Model.CurrentState)
+                            .Subscribe(x => MonitorImage = StateToMonitorImage(x));
+
             _timer.Tick += new System.EventHandler(OnTimer);
             _timer.Interval = new System.TimeSpan(0,0,1);
         }
@@ -21,24 +39,12 @@ namespace ArithmeticGunner.ViewModels
         public void StartGame()
         {
             Model.StartGame();
-            UpdateFromModel();
              _timer.Start();
         }
 
         public void OnTimer(object? sender, System.EventArgs e)
         {
             Model.OnTimer();
-            UpdateFromModel();
-        }
-
-        void UpdateFromModel()
-        {
-            MonitorImage = StateToMonitorImage(Model.CurrentState);
-            Arg1 = Model.Arg1.ToString();
-            Operation = Model.CurrentOperation;
-            Arg2 = Model.Arg2.ToString();
-            Level = $"Level:{Model.Level.ToString()}";
-            Lives = Model.Lives;
         }
 
         protected string _arg1 = "1";
@@ -97,7 +103,7 @@ namespace ArithmeticGunner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _shotButtonImage,value);
         }
 
-        public string Answer {get; set;}
+        public string Answer {get; set;} = "0";
 
         public void OnShotButtonPressed()
         {
@@ -107,7 +113,6 @@ namespace ArithmeticGunner.ViewModels
             if (Int32.TryParse(Answer,out ivalue))
             {
                 Model.AcceptAnswer(ivalue);
-                UpdateFromModel();
             }
             ShotButtonPressed = false;
         }

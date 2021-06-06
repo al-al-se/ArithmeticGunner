@@ -1,4 +1,5 @@
 using System;
+using ReactiveUI;
 namespace ArithmeticGunner.Models
 {
     public enum OperationType
@@ -13,7 +14,7 @@ namespace ArithmeticGunner.Models
     {
         int Arg1 {get;}
 
-        string CurrentOperation {get;}
+        string CurrentOperationStr {get;}
 
         int Arg2 {get;}
 
@@ -24,33 +25,52 @@ namespace ArithmeticGunner.Models
         void PrepareValues();
     }
 
-    public class OperationHandler : IOperationHandler
+    public class OperationHandler : ReactiveObject, IOperationHandler
     {
-        public int Arg1 {get; protected set;}
+        protected int _arg1 = 0;
+        public int Arg1
+        {
+            get => _arg1;
+            set => this.RaiseAndSetIfChanged(ref _arg1,value);
+        }
 
         protected OperationType _currentOperation {get; set;}
 
-        public string CurrentOperation
+        public OperationType CurrentOperation 
         {
-            get
+            get => _currentOperation; 
+            set
             {
+                _currentOperation = value;
                 switch(_currentOperation)
                 {
-                    case OperationType.Add: return "+";
-                    case OperationType.Subtract: return "-";
-                    case OperationType.Multiply: return "*";
-                    case OperationType.Divide: return "/";
-                    default: return " ";
+                    case OperationType.Add: CurrentOperationStr = "+"; break;
+                    case OperationType.Subtract: CurrentOperationStr = "-"; break;
+                    case OperationType.Multiply: CurrentOperationStr = "*"; break;
+                    case OperationType.Divide: CurrentOperationStr = "/"; break;
+                    default: CurrentOperationStr = " "; break;
                 }
             }
         }
 
-        public int Arg2 {get; protected set;}
+        protected string _currentOperationStr = "";
+
+        public string CurrentOperationStr
+        {
+            get =>  _currentOperationStr;
+            set => this.RaiseAndSetIfChanged(ref  _currentOperationStr,value);
+        }
+
+        protected int _arg2 = 0;
+        public int Arg2
+        {
+            get => _arg2;
+            set => this.RaiseAndSetIfChanged(ref _arg2,value);
+        }
 
         protected int _expectedResult {get; set;}
 
         public int Level {get; set;}
-
 
         public bool AcceptAnswer(int answer)
         {
@@ -68,8 +88,8 @@ namespace ArithmeticGunner.Models
         {
             Arg2 = Generate() % 20;
             int iOperation = _randomGenerator.Next() % 4;
-            _currentOperation = (OperationType)iOperation;
-            switch(_currentOperation)
+            CurrentOperation = (OperationType)iOperation;
+            switch(CurrentOperation)
             {
                 case OperationType.Add:
                     Arg1 = Generate(); 

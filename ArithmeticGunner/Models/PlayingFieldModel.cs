@@ -1,4 +1,5 @@
 using System;
+using ReactiveUI;
 namespace ArithmeticGunner.Models
 {
     public enum State
@@ -20,14 +21,9 @@ namespace ArithmeticGunner.Models
 
     public interface IPlayingField
     {
-        int Arg1 {get;}
-
         State CurrentState {get;}
 
-        string CurrentOperation {get;}
-
-        int Arg2 {get;}
-
+        IOperationHandler OperationData {get;}
         int Level {get;}
 
         int Lives {get;}
@@ -39,22 +35,23 @@ namespace ArithmeticGunner.Models
         void OnTimer();
     }
 
-    public class PlayingFieldModel :  IPlayingField
+    public class PlayingFieldModel : ReactiveObject,  IPlayingField
     {
-        public State CurrentState  {get;  protected set; }
+        protected State _currentState = State.NotStarted;
+        public State CurrentState
+        {
+            get => _currentState;
+            set => this.RaiseAndSetIfChanged(ref _currentState,value);
+        }
 
-        protected IOperationHandler _operationHandler = new OperationHandler();
+        public IOperationHandler OperationData {get; protected set;}
+                             = new OperationHandler();
 
-        public int Arg1 => _operationHandler.Arg1;
-
-        public string CurrentOperation => _operationHandler.CurrentOperation;
-
-        public int Arg2 => _operationHandler.Arg2;
 
         public void TargetHit()
         {
             CurrentState = State.TargetHit;
-            _operationHandler.Level = ++Level;
+            OperationData.Level = ++Level;
         }
 
         public int Answer {get; set;} = 0;
@@ -72,7 +69,7 @@ namespace ArithmeticGunner.Models
 
         public void GetShotResult()
         {
-            if (_operationHandler.AcceptAnswer(Answer))
+            if (OperationData.AcceptAnswer(Answer))
             {
                 TargetHit();
             } else
@@ -85,16 +82,16 @@ namespace ArithmeticGunner.Models
 
         public int Level 
         {
-            get {return __internalLevel;}
-            set {__internalLevel = value;}
+            get => __internalLevel;
+            set => this.RaiseAndSetIfChanged(ref __internalLevel,value);
         }
 
         private int __internalLives = 10;
 
         public int Lives
         {
-            get {return __internalLives;}
-            set {__internalLives = value; }
+            get => __internalLives;
+            set => this.RaiseAndSetIfChanged(ref __internalLives,value);
         }
 
         public int TimeoutSeconds {get; protected set;}
@@ -105,14 +102,14 @@ namespace ArithmeticGunner.Models
         {
             Lives = 10;
             Level = 1;
-            _operationHandler.Level = Level;
+            OperationData.Level = Level;
             CurrentState = State.TargetNotFound;
             TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
         }
 
         public void NewTargetFound()
         {
-            _operationHandler.PrepareValues();
+            OperationData.PrepareValues();
             CurrentState = State.TargetFound;
             TimeoutSeconds = _randomGenerator.Next() % 20 + 20;           
         }
