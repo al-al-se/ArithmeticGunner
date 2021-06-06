@@ -37,13 +37,21 @@
         Grid.Row="0" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
         Foreground="Yellow"
-        Text="{Binding PlayingFieldInst.CurrentOperation}"
+        Text="{Binding PlayingFieldInst.Operation}"
       />
       <TextBlock x:Name="Level" 
         Grid.Row="1" Grid.Column="0" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
-        Foreground="Green"
+        Foreground="White"
         Text="{Binding PlayingFieldInst.Level}"
+      />
+      <ProgressBar x:Name="Lives"
+        Grid.Row="2" Grid.Column="0" 
+        Foreground="Green"
+        Orientation="Vertical" 
+        Minimum="0" 
+        Maximum="10" 
+        Value="{Binding PlayingFieldInst.Lives}"
       />
       <Image Source="{Binding PlayingFieldInst.MonitorImage, Converter={StaticResource variableImage}}" 
         Grid.Row="1" Grid.Column="1"

@@ -37,7 +37,8 @@ namespace ArithmeticGunner.ViewModels
             Arg1 = Model.Arg1.ToString();
             Operation = Model.CurrentOperation;
             Arg2 = Model.Arg2.ToString();
-            Level = Model.Level.ToString();
+            Level = $"Level:{Model.Level.ToString()}";
+            Lives = Model.Lives;
         }
 
         protected string _arg1 = "1";
@@ -68,7 +69,12 @@ namespace ArithmeticGunner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _level,value);
         }
 
-        int Lives {get;}
+        protected double _lives = 10;
+        public double Lives
+        {
+            get => _lives;
+            set => this.RaiseAndSetIfChanged(ref _lives,value);
+        }
 
 
 
