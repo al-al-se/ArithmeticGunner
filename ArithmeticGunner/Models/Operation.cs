@@ -11,13 +11,13 @@ namespace ArithmeticGunner.Models
 
     public interface IOperationHandler
     {
-        string Arg1 {get;}
+        int Arg1 {get;}
 
         string CurrentOperation {get;}
 
-        string Arg2 {get;}
+        int Arg2 {get;}
 
-        bool AcceptAnswer(string answer);
+        bool AcceptAnswer(int answer);
 
         int Level {get; set;}
 
@@ -26,9 +26,7 @@ namespace ArithmeticGunner.Models
 
     public class OperationHandler : IOperationHandler
     {
-        protected int _arg1 {get; set;}
-
-        public string Arg1 => _arg1.ToString();
+        public int Arg1 {get; protected set;}
 
         protected OperationType _currentOperation {get; set;}
 
@@ -47,22 +45,14 @@ namespace ArithmeticGunner.Models
             }
         }
 
-        protected int _arg2 {get; set;}
-
-        public string Arg2 => _arg2.ToString();
+        public int Arg2 {get; protected set;}
 
         protected int _expectedResult {get; set;}
 
         public int Level {get; set;}
 
-        public bool AcceptAnswer(string answer)
-        {
-            int iValue;
-            if(!Int32.TryParse(answer, out iValue)) return false;
-            return AcceptAnswer(iValue);
-        }
 
-        bool AcceptAnswer(int answer)
+        public bool AcceptAnswer(int answer)
         {
             return _expectedResult == answer;
         }
@@ -76,26 +66,26 @@ namespace ArithmeticGunner.Models
 
         public void PrepareValues()
         {
-            _arg2 = Generate();
+            Arg2 = Generate();
             int iOperation = _randomGenerator.Next() % 4;
             _currentOperation = (OperationType)iOperation;
             switch(_currentOperation)
             {
                 case OperationType.Add:
-                    _arg1 = Generate(); 
-                    _expectedResult = _arg1 + _arg2;
+                    Arg1 = Generate(); 
+                    _expectedResult = Arg1 + Arg2;
                     break;
                 case OperationType.Subtract:
                     _expectedResult = Generate();
-                    _arg1 = _arg2 + _expectedResult;
+                    Arg1 = Arg2 + _expectedResult;
                     break;
                 case OperationType.Multiply:
-                    _arg1 = Generate(); 
-                    _expectedResult = _arg1 * _arg2;
+                    Arg1 = Generate(); 
+                    _expectedResult = Arg1 * Arg2;
                     break;
                 case OperationType.Divide:
                     _expectedResult = Generate();
-                    _arg1 = _arg2 * _expectedResult;
+                    Arg1 = Arg2 * _expectedResult;
                     break;
             }
         }

@@ -20,13 +20,13 @@ namespace ArithmeticGunner.Models
 
     public interface IPlayingField
     {
-        string Arg1 {get;}
+        int Arg1 {get;}
 
         State CurrentState {get;}
 
-        string Arg2 {get;}
+        string CurrentOperation {get;}
 
-        string Answer {get; set;}
+        int Arg2 {get;}
 
         int Level {get;}
 
@@ -34,39 +34,22 @@ namespace ArithmeticGunner.Models
 
         void StartGame();
 
-        void AcceptAnswer();
+        void AcceptAnswer(int answer);
 
         void OnTimer();
     }
 
     public class PlayingFieldModel :  IPlayingField
     {
-        private State __internalState = State.NotStarted;
-        public State CurrentState 
-        {
-            get
-            {
-                return __internalState;
-            }
-            protected set
-            {
-                __internalState = value;
-                
-                if (__internalState == State.TargetFound)
-                {
+        public State CurrentState  {get;  protected set; }
 
-                }
-            }
-        }
-
-        public string StrState => __internalState.ToString("g");
         protected IOperationHandler _operationHandler = new OperationHandler();
 
-        public string Arg1 => _operationHandler.Arg1;
+        public int Arg1 => _operationHandler.Arg1;
 
         public string CurrentOperation => _operationHandler.CurrentOperation;
 
-        public string Arg2 => _operationHandler.Arg2;
+        public int Arg2 => _operationHandler.Arg2;
 
         public void TargetHit()
         {
@@ -74,12 +57,13 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = ++Level;
         }
 
-        public string Answer {get; set;} = "  ";
+        public int Answer {get; set;} = 0;
 
-        public void AcceptAnswer()
+        public void AcceptAnswer(int answer)
         {
             if (CurrentState == State.TargetFound)
             {
+                Answer = answer;
                 CurrentState = State.Shot;
             }
         }

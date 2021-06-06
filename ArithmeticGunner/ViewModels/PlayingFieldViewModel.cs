@@ -1,3 +1,4 @@
+using System;
 using ReactiveUI;
 using Avalonia.Threading;
 namespace ArithmeticGunner.ViewModels
@@ -8,7 +9,7 @@ namespace ArithmeticGunner.ViewModels
         public PlayingFieldViewModel()
         {
             Model = new ArithmeticGunner.Models.PlayingFieldModel();
-            
+            UpdateFromModel();
             _timer.Tick += new System.EventHandler(OnTimer);
             _timer.Interval = new System.TimeSpan(0,0,1);
         }
@@ -20,15 +21,56 @@ namespace ArithmeticGunner.ViewModels
         public void StartGame()
         {
             Model.StartGame();
-            MonitorImage = StateToMonitorImage(Model.CurrentState);
+            UpdateFromModel();
              _timer.Start();
         }
 
         public void OnTimer(object? sender, System.EventArgs e)
         {
             Model.OnTimer();
-            MonitorImage = StateToMonitorImage(Model.CurrentState);
+            UpdateFromModel();
         }
+
+        void UpdateFromModel()
+        {
+            MonitorImage = StateToMonitorImage(Model.CurrentState);
+            Arg1 = Model.Arg1.ToString();
+            Operation = Model.CurrentOperation;
+            Arg2 = Model.Arg2.ToString();
+            Level = Model.Level.ToString();
+        }
+
+        protected string _arg1 = "1";
+        public string Arg1
+        {
+            get => _arg1;
+            set => this.RaiseAndSetIfChanged(ref _arg1,value);
+        }
+
+        protected string _arg2 = "1";
+        public string Arg2
+        {
+            get => _arg2;
+            set => this.RaiseAndSetIfChanged(ref _arg2,value);
+        }
+
+        protected string _operation = "1";
+        public string Operation
+        {
+            get => _operation;
+            set => this.RaiseAndSetIfChanged(ref _operation,value);
+        }
+
+        protected string _level = "1";
+        public string Level
+        {
+            get => _level;
+            set => this.RaiseAndSetIfChanged(ref _level,value);
+        }
+
+        int Lives {get;}
+
+
 
         protected bool _shotButtonPressed = false;
         protected bool ShotButtonPressed
@@ -49,11 +91,17 @@ namespace ArithmeticGunner.ViewModels
             set => this.RaiseAndSetIfChanged(ref _shotButtonImage,value);
         }
 
+        public string Answer {get; set;}
+
         public void OnShotButtonPressed()
         {
             ShotButtonPressed = true;
             System.Threading.Thread.Sleep(1000);
-            Model.AcceptAnswer();
+            int ivalue;
+            if (Int32.TryParse(Answer,out ivalue))
+            {
+                Model.AcceptAnswer(ivalue);
+            }
             ShotButtonPressed = false;
         }
 

@@ -31,13 +31,19 @@
         Grid.Row="0" Grid.Column="2" 
         HorizontalAlignment="Center" VerticalAlignment="Center"
         Foreground="Yellow" 
-        Text="{Binding PlayingFieldInst.Model.Arg1}"
+        Text="{Binding PlayingFieldInst.Arg1}"
       />
       <TextBlock x:Name="operation" 
         Grid.Row="0" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
         Foreground="Yellow"
-        Text="{Binding PlayingFieldInst.Model.CurrentOperation}"
+        Text="{Binding PlayingFieldInst.CurrentOperation}"
+      />
+      <TextBlock x:Name="Level" 
+        Grid.Row="1" Grid.Column="0" 
+        HorizontalAlignment="Left" VerticalAlignment="Center"
+        Foreground="Green"
+        Text="{Binding PlayingFieldInst.Level}"
       />
       <Image Source="{Binding PlayingFieldInst.MonitorImage, Converter={StaticResource variableImage}}" 
         Grid.Row="1" Grid.Column="1"
@@ -47,7 +53,7 @@
         Grid.Row="2" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
         Foreground="Yellow"
-        Text="{Binding PlayingFieldInst.Model.Arg2}"
+        Text="{Binding PlayingFieldInst.Arg2}"
       />
       <TextBlock x:Name="=" 
         Grid.Row="3" Grid.Column="4" 
