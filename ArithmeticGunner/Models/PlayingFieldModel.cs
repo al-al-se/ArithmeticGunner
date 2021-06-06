@@ -76,7 +76,7 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = ++Level;
         }
 
-        public string Answer {get; set;} = "__";
+        public string Answer {get; set;} = "  ";
 
         public void AcceptAnswer()
         {

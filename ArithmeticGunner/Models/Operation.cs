@@ -32,7 +32,20 @@ namespace ArithmeticGunner.Models
 
         protected OperationType _currentOperation {get; set;}
 
-        public string CurrentOperation => _currentOperation.ToString("g");
+        public string CurrentOperation
+        {
+            get
+            {
+                switch(_currentOperation)
+                {
+                    case OperationType.Add: return "+";
+                    case OperationType.Subtract: return "-";
+                    case OperationType.Multiply: return "*";
+                    case OperationType.Divide: return "/";
+                    default: return " ";
+                }
+            }
+        }
 
         protected int _arg2 {get; set;}
 
