@@ -41,12 +41,12 @@
       />
       <TextBlock x:Name="Level" 
         Grid.Row="1" Grid.Column="0" 
-        HorizontalAlignment="Left" VerticalAlignment="Center"
+        HorizontalAlignment="Left" VerticalAlignment="Top"
         Foreground="White"
         Text="{Binding PlayingFieldInst.Level}"
       />
       <ProgressBar x:Name="Lives"
-        Grid.Row="2" Grid.Column="0" 
+        Grid.Row="4" Grid.Column="0" 
         Foreground="Green"
         Orientation="Vertical" 
         Minimum="0" 
