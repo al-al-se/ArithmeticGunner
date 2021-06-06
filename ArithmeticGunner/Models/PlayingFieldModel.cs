@@ -1,8 +1,4 @@
 using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using Avalonia.Threading;
-
 namespace ArithmeticGunner.Models
 {
     public enum State
@@ -39,9 +35,11 @@ namespace ArithmeticGunner.Models
         void StartGame();
 
         void AcceptAnswer();
+
+        void OnTimer();
     }
 
-    public class PlayingFieldModel : IPlayingField
+    public class PlayingFieldModel :  IPlayingField
     {
         private State __internalState = State.NotStarted;
         public State CurrentState 
@@ -113,14 +111,6 @@ namespace ArithmeticGunner.Models
             set {__internalLives = value; }
         }
 
-        protected DispatcherTimer _timer = new DispatcherTimer();
-
-        public PlayingFieldModel()
-        {
-            _timer.Tick += new System.EventHandler(OnTimer);
-            _timer.Interval = new System.TimeSpan(0,0,1);
-        }
-
         public int TimeoutSeconds {get; protected set;}
 
         protected Random _randomGenerator = new Random();
@@ -148,7 +138,6 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = Level;
             CurrentState = State.TargetNotFound;
             ResetTimeout();
-            _timer.Start();
         }
 
         public void NewTargetFound()
@@ -166,11 +155,10 @@ namespace ArithmeticGunner.Models
                 ResetTimeout();
             } else{
                 CurrentState = State.GameOver;
-                _timer.Stop();
             }
         }
 
-        public void OnTimer(object? sender, System.EventArgs e)
+        public void OnTimer()
         {
             --TimeoutSeconds;
             switch(CurrentState)
