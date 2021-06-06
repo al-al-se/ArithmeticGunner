@@ -81,7 +81,6 @@ namespace ArithmeticGunner.Models
         {
             CurrentState = State.TargetHit;
             _operationHandler.Level = ++Level;
-            CurrentState = State.TargetNotFound;
         }
 
         public string _acceptedAnswer {get; protected set;};
@@ -192,8 +191,14 @@ namespace ArithmeticGunner.Models
                     if (TimeoutSeconds == 0)
                         WeGotHit(); 
                     break;
+                case State.WeGotHit:
+                    CurrentState = State.TargetFound;
+                    break;
                 case State.Shot: 
                     GetShotResult(); 
+                    break;
+                case State.TargetHit:
+                    CurrentState = State.TargetNotFound;
                     ResetTimeout();
                     break;
                 default:
