@@ -83,7 +83,7 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = ++Level;
         }
 
-        public string _acceptedAnswer {get; protected set;};
+        public string _acceptedAnswer {get; protected set;}
 
         public void AcceptAnswer(string answer)
         {
