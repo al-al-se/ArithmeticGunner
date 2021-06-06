@@ -11,6 +11,7 @@ namespace ArithmeticGunner.ViewModels
         public MainWindowViewModel()
         {
             PlayingFieldInst = new PlayingFieldViewModel();
+            PlayingFieldInst.StartGame();
         }
     }
 }

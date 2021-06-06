@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using Avalonia.Interactivity;
 
 namespace ArithmeticGunner.ViewModels
 {
@@ -12,9 +10,14 @@ namespace ArithmeticGunner.ViewModels
 
         public ArithmeticGunner.Models.IPlayingField Model { get; protected init;}
 
-        public void OnShotButtonPressed(object sender, RoutedEventArgs e)
+        public void StartGame()
         {
-            
+            Model.StartGame();
+        }
+
+        public void OnShotButtonPressed()
+        {
+            Model.AcceptAnswer();
         }
     }
 }
