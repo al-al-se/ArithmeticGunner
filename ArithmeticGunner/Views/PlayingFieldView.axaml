@@ -5,7 +5,6 @@
              xmlns:vm="using:ArithmeticGunner.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ArithmeticGunner.Views.PlayingFieldView"
-             
              >
   
   <Grid Background="Black" >
@@ -28,13 +27,13 @@
         Grid.Row="0" Grid.Column="2" 
         HorizontalAlignment="Center" VerticalAlignment="Center"
         Foreground="Yellow" 
-        Text="{Binding Model.Arg1}"
+        Text="{Binding PlayingFieldInst.Model.Arg1}"
       />
       <TextBlock x:Name="operation" 
         Grid.Row="0" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
         Foreground="Yellow"
-        Text="{Binding Model.CurrentOperation}"
+        Text="{Binding PlayingFieldInst.Model.CurrentOperation}"
       />
       <Image Source="/Assets/monitor.jpg" 
         Grid.Row="1" Grid.Column="1"
@@ -44,7 +43,7 @@
         Grid.Row="2" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
         Foreground="Yellow"
-        Text="{Binding Model.Arg2}"
+        Text="{Binding PlayingFieldInst.Model.Arg2}"
       />
       <TextBlock x:Name="=" 
         Grid.Row="3" Grid.Column="4" 
@@ -63,7 +62,7 @@
       <TextBox x:Name="answer" 
         Grid.Row="4" Grid.Column="4" 
         Foreground="Yellow"
-        Text="{Binding Model.Answer}">
+        Text="{Binding PlayingFieldInst.Model.Answer}">
       </TextBox>
   </Grid>
 
