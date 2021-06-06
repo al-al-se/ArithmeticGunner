@@ -39,7 +39,7 @@
         Foreground="Yellow"
         Text="{Binding PlayingFieldInst.Model.CurrentOperation}"
       />
-      <Image Source="{Binding PlayingFieldInst.Model.MonitorImage, Converter={StaticResource variableImage}}"
+      <Image Source="{Binding PlayingFieldInst.MonitorImage, Converter={StaticResource variableImage}}" 
         Grid.Row="1" Grid.Column="1"
         Grid.ColumnSpan="3" Grid.RowSpan="3"
       />
