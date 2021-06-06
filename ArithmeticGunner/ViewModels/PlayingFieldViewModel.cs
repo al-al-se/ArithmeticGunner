@@ -107,6 +107,7 @@ namespace ArithmeticGunner.ViewModels
             if (Int32.TryParse(Answer,out ivalue))
             {
                 Model.AcceptAnswer(ivalue);
+                UpdateFromModel();
             }
             ShotButtonPressed = false;
         }

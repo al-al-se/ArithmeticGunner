@@ -80,7 +80,7 @@
       <TextBox x:Name="answer" 
         Grid.Row="4" Grid.Column="4" 
         Foreground="Red"
-        Text="{Binding PlayingFieldInst.Model.Answer}">
+        Text="{Binding PlayingFieldInst.Answer}">
       </TextBox>
   </Grid>
 

@@ -61,7 +61,9 @@ namespace ArithmeticGunner.Models
 
         public void AcceptAnswer(int answer)
         {
-            if (CurrentState == State.TargetFound)
+            if (CurrentState == State.TargetFound ||
+                CurrentState == State.TargetAttacts ||
+                CurrentState == State.WeGotHit)
             {
                 Answer = answer;
                 CurrentState = State.Shot;
@@ -107,7 +109,7 @@ namespace ArithmeticGunner.Models
                     TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
                     break;
                 case State.TargetFound:
-                    TimeoutSeconds = _randomGenerator.Next() % 10 + 10;
+                    TimeoutSeconds = _randomGenerator.Next() % 20 + 15;
                     break;
                 default:
                     TimeoutSeconds = 1;
