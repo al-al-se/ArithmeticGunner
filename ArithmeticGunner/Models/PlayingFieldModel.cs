@@ -101,36 +101,20 @@ namespace ArithmeticGunner.Models
 
         protected Random _randomGenerator = new Random();
 
-        void ResetTimeout()
-        {
-            switch(CurrentState)
-            {
-                case State.TargetNotFound:
-                    TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
-                    break;
-                case State.TargetFound:
-                    TimeoutSeconds = _randomGenerator.Next() % 20 + 15;
-                    break;
-                default:
-                    TimeoutSeconds = 1;
-                    break;
-            }
-        }
-
         public void StartGame()
         {
             Lives = 10;
             Level = 1;
             _operationHandler.Level = Level;
             CurrentState = State.TargetNotFound;
-            ResetTimeout();
+            TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
         }
 
         public void NewTargetFound()
         {
             _operationHandler.PrepareValues();
             CurrentState = State.TargetFound;
-            ResetTimeout();
+            TimeoutSeconds = _randomGenerator.Next() % 20 + 20;           
         }
 
         public void WeGotHit()
@@ -138,7 +122,6 @@ namespace ArithmeticGunner.Models
             if (--Lives > 0)
             {
                 CurrentState = State.WeGotHit;
-                ResetTimeout();
             } else{
                 CurrentState = State.GameOver;
             }
@@ -154,23 +137,24 @@ namespace ArithmeticGunner.Models
                         NewTargetFound(); 
                     break;
                 case State.TargetFound: 
-                    CurrentState = State.TargetAttacts;
+                    if (TimeoutSeconds == 0)
+                        CurrentState = State.TargetAttacts;
                     break;
                 case State.TargetAttacts:
                     WeGotHit(); 
                     break;
                 case State.WeGotHit:
                     CurrentState = State.TargetFound;
+                    TimeoutSeconds = _randomGenerator.Next() % 10 + 10;
                     break;
                 case State.Shot: 
                     GetShotResult(); 
                     break;
                 case State.TargetHit:
                     CurrentState = State.TargetNotFound;
-                    ResetTimeout();
+                    TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
                     break;
                 default:
-                    ResetTimeout();
                     break;
             }
         }

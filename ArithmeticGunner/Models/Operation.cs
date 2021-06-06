@@ -61,12 +61,12 @@ namespace ArithmeticGunner.Models
 
         protected int Generate()
         {
-            return _randomGenerator.Next() % (Level * 4) + 1;
+            return _randomGenerator.Next() % (Level * 2) + 1;
         }
 
         public void PrepareValues()
         {
-            Arg2 = Generate();
+            Arg2 = Generate() % 20;
             int iOperation = _randomGenerator.Next() % 4;
             _currentOperation = (OperationType)iOperation;
             switch(_currentOperation)
@@ -80,11 +80,11 @@ namespace ArithmeticGunner.Models
                     Arg1 = Arg2 + _expectedResult;
                     break;
                 case OperationType.Multiply:
-                    Arg1 = Generate(); 
+                    Arg1 = Generate() % 20; 
                     _expectedResult = Arg1 * Arg2;
                     break;
                 case OperationType.Divide:
-                    _expectedResult = Generate();
+                    _expectedResult = Generate() % 20;
                     Arg1 = Arg2 * _expectedResult;
                     break;
             }
