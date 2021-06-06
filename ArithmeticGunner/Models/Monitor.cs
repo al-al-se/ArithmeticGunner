@@ -1,3 +1,6 @@
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace ArithmeticGunner.Models
 {
     public enum State
@@ -27,11 +30,36 @@ namespace ArithmeticGunner.Models
         void AcceptAnswer(string answer);
     }
 
-    public class Monitor
+    public class Monitor : IMonitor, INotifyPropertyChanged
     {
-        protected State _state = State.TargetNotFound;
+        public event PropertyChangedEventHandler PropertyChanged = null;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
 
-        public string StrState => _state.ToString("g");
+        private State __internalState = State.TargetNotFound;
+        public State CurrentState 
+        {
+            get
+            {
+                return __internalState;
+            }
+            protected set
+            {
+                __internalState = value;
+                OnPropertyChanged("CurrentState ");
+                if (__internalState == State.TargetFound)
+                {
+                    OnPropertyChanged("Arg1");
+                    OnPropertyChanged("CurrentOperation");
+                    OnPropertyChanged("Arg2");
+                }
+            }
+        }
+
+        public string StrState => __internalState.ToString("g");
         protected IOperationHandler _operationHandler = new OperationHandler();
 
         public string Arg1 => _operationHandler.Arg1;
@@ -45,9 +73,9 @@ namespace ArithmeticGunner.Models
 
         }
 
-        void StartGame()
+        public void StartGame()
         {
-            
+
         }
 
     }
