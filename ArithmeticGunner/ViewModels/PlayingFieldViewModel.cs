@@ -1,17 +1,18 @@
 using System.Collections.ObjectModel;
+using Avalonia.Interactivity;
 
 namespace ArithmeticGunner.ViewModels
 {
-    public class PlayingField : ViewModelBase
+    public class PlayingFieldViewModel : ViewModelBase
     {
-        public PlayingField()
+        public PlayingFieldViewModel()
         {
-            Model = new ArithmeticGunner.Models.PlayingField();
+            Model = new ArithmeticGunner.Models.PlayingFieldModel();
         }
 
         public ArithmeticGunner.Models.IPlayingField Model { get; protected init;}
 
-        public void OnShotButtonPressed()
+        public void OnShotButtonPressed(object sender, RoutedEventArgs e)
         {
             
         }

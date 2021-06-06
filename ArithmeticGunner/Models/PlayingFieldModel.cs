@@ -41,15 +41,8 @@ namespace ArithmeticGunner.Models
         void AcceptAnswer();
     }
 
-    public class PlayingField : IPlayingField, INotifyPropertyChanged
+    public class PlayingFieldModel : IPlayingField
     {
-        public event PropertyChangedEventHandler PropertyChanged = null;
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
         private State __internalState = State.NotStarted;
         public State CurrentState 
         {
@@ -60,12 +53,10 @@ namespace ArithmeticGunner.Models
             protected set
             {
                 __internalState = value;
-                OnPropertyChanged("CurrentState ");
+                
                 if (__internalState == State.TargetFound)
                 {
-                    OnPropertyChanged("Arg1");
-                    OnPropertyChanged("CurrentOperation");
-                    OnPropertyChanged("Arg2");
+
                 }
             }
         }
@@ -85,7 +76,7 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = ++Level;
         }
 
-        public string Answer {get; set;}
+        public string Answer {get; set;} = "__";
 
         public void AcceptAnswer()
         {
@@ -111,7 +102,7 @@ namespace ArithmeticGunner.Models
         public int Level 
         {
             get {return __internalLevel;}
-            set {__internalLevel = value; OnPropertyChanged("Level");}
+            set {__internalLevel = value;}
         }
 
         private int __internalLives = 10;
@@ -119,12 +110,12 @@ namespace ArithmeticGunner.Models
         public int Lives
         {
             get {return __internalLives;}
-            set {__internalLives = value; OnPropertyChanged("Lives");}
+            set {__internalLives = value; }
         }
 
         protected DispatcherTimer _timer = new DispatcherTimer();
 
-        public PlayingField()
+        public PlayingFieldModel()
         {
             _timer.Tick += new System.EventHandler(OnTimer);
             _timer.Interval = new System.TimeSpan(0,0,1);

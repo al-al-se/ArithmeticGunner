@@ -14,5 +14,5 @@
     </Design.DataContext>
 
     
-    <views:PlayingField />
+    <views:PlayingFieldView />
 </Window>

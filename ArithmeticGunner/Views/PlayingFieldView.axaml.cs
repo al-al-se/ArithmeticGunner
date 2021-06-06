@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaloniaAppTemplate.Namespace
+namespace ArithmeticGunner.Views
 {
-    public partial class PlayingField : UserControl
+    public partial class PlayingFieldView : UserControl
     {
-        public PlayingField()
+        public PlayingFieldView()
         {
             InitializeComponent();
         }
