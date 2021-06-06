@@ -4,5 +4,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ArithmeticGunner.Views.PlayingField">
-  PlayingField
+  
+  <Grid Background="Green">
+      <Grid.RowDefinitions>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+          <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+          <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      
+      <TextBlock x:Name="arg1" Grid.Row="0" Grid.Column="2">1</TextBlock>
+      <TextBlock x:Name="operation" Grid.Row="0" Grid.Column="4">*</TextBlock>
+      <Image Source="myPhoto.jpg" Grid.Row="1" Grid.Column="1"/>
+      <TextBlock x:Name="arg2" Grid.Row="2" Grid.Column="4">2</TextBlock>
+      <TextBlock x:Name="=" Grid.Row="3" Grid.Column="4">=</TextBlock>
+      <Button x:Name="send" Grid.Row="4" Grid.Column="3" 
+                      Background="Red" HorizontalAlignment="Center" ></Button>
+      <TextBox x:Name="answer" Grid.Row="4" Grid.Column="4">2</TextBox>
+  </Grid>
+
+
 </UserControl>
