@@ -50,8 +50,10 @@
       </TextBlock>
       <Button x:Name="send" 
         Grid.Row="4" Grid.Column="3" 
-        Background="Red" 
         HorizontalAlignment="Center" >
+          <Button.Content>
+            <Image Source="/Assets/button.jpg" />
+        </Button.Content>
       </Button>
       <TextBox x:Name="answer" 
         Grid.Row="4" Grid.Column="4" 
