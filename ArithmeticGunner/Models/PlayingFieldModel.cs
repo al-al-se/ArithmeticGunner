@@ -180,8 +180,10 @@ namespace ArithmeticGunner.Models
                         NewTargetFound(); 
                     break;
                 case State.TargetFound: 
-                    if (TimeoutSeconds == 0)
-                        WeGotHit(); 
+                    CurrentState = State.TargetAttacts;
+                    break;
+                case State.TargetAttacts:
+                    WeGotHit(); 
                     break;
                 case State.WeGotHit:
                     CurrentState = State.TargetFound;
