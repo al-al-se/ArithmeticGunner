@@ -22,7 +22,7 @@ namespace ArithmeticGunner.Models
         GameOver
     }
 
-    public interface IMonitor
+    public interface IPlayingField
     {
         string Arg1 {get;}
 
@@ -39,7 +39,7 @@ namespace ArithmeticGunner.Models
         void AcceptAnswer(string answer);
     }
 
-    public class Monitor : IMonitor, INotifyPropertyChanged
+    public class PlayingField : IPlayingField, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = null;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -123,7 +123,7 @@ namespace ArithmeticGunner.Models
 
         protected DispatcherTimer _timer = new DispatcherTimer();
 
-        public Monitor()
+        public PlayingField()
         {
             _timer.Tick += new System.EventHandler(OnTimer);
             _timer.Interval = new System.TimeSpan(0,0,1);
