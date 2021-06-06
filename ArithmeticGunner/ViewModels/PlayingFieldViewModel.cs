@@ -1,6 +1,7 @@
 
 namespace ArithmeticGunner.ViewModels
 {
+
     public class PlayingFieldViewModel : ViewModelBase
     {
         public PlayingFieldViewModel()
@@ -18,7 +19,7 @@ namespace ArithmeticGunner.ViewModels
         protected bool ShotButtonPressed = false;
 
         public string ShotButtonImage => 
-                ShotButtonPressed ? "/Assets/button_pressed.jpg" : "/Assets/button.jpg";
+                ShotButtonPressed ? "button_pressed.jpg" : "button.jpg";
 
         public void OnShotButtonPressed()
         {
@@ -34,19 +35,19 @@ namespace ArithmeticGunner.ViewModels
                 switch(Model.CurrentState)
                 {
                     case ArithmeticGunner.Models.State.TargetFound:
-                        return "/Assets/monitor_with_target.jpg";
+                        return "monitor_with_target.jpg";
                     case ArithmeticGunner.Models.State.TargetAttacts:
-                        return "/Assets/monitor_attack.jpg"; 
+                        return "monitor_attack.jpg"; 
                     case ArithmeticGunner.Models.State.WeGotHit:
-                        return "/Assets/monitor_we_got_hit.jpg"; 
+                        return "monitor_we_got_hit.jpg"; 
                     case ArithmeticGunner.Models.State.Shot:
-                        return "/Assets/monitor_shot.jpg";
+                        return "monitor_shot.jpg";
                     case ArithmeticGunner.Models.State.TargetHit:
-                        return "/Assets/monitor_target_hit.jpg";
+                        return "monitor_target_hit.jpg";
                     case ArithmeticGunner.Models.State.GameOver:
-                        return "/Assets/game_over.jpg";
+                        return "game_over.jpg";
                     default:
-                        return "/Assets/monitor.jpg";
+                        return "monitor.jpg";
                 }
             }
         }

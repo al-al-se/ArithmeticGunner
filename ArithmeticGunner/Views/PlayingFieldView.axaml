@@ -6,6 +6,10 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ArithmeticGunner.Views.PlayingFieldView"
              >
+
+  <UserControl.Resources>
+    <vm:BitmapAssetValueConverter x:Key="variableImage"/>
+  </UserControl.Resources>
   
   <Grid Background="Black" >
       <Grid.RowDefinitions>
@@ -35,7 +39,7 @@
         Foreground="Yellow"
         Text="{Binding PlayingFieldInst.Model.CurrentOperation}"
       />
-      <Image Source="{Binding PlayingFieldInst.Model.MonitorImage}"
+      <Image Source="{Binding PlayingFieldInst.Model.MonitorImage, Converter={StaticResource variableImage}}"
         Grid.Row="1" Grid.Column="1"
         Grid.ColumnSpan="3" Grid.RowSpan="3"
       />
@@ -56,7 +60,7 @@
         Command="{Binding PlayingFieldInst.OnShotButtonPressed}"
         >
           <Button.Content>
-            <Image Source="{Binding PlayingFieldInst.ShotButtonImage}" />
+            <Image Source="{Binding PlayingFieldInst.ShotButtonImage, Converter={StaticResource variableImage}}" />
         </Button.Content>
       </Button>
       <TextBox x:Name="answer" 
