@@ -1,10 +1,13 @@
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Avalonia.Threading;
 
 namespace ArithmeticGunner.Models
 {
     public enum State
     {
+        NotStarted,
         TargetNotFound,
         TargetFound,
 
@@ -14,7 +17,9 @@ namespace ArithmeticGunner.Models
 
         TargetAttacts,
 
-        WeGotHit
+        WeGotHit,
+
+        GameOver
     }
 
     public interface IMonitor
@@ -43,7 +48,7 @@ namespace ArithmeticGunner.Models
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        private State __internalState = State.TargetNotFound;
+        private State __internalState = State.NotStarted;
         public State CurrentState 
         {
             get
@@ -72,19 +77,32 @@ namespace ArithmeticGunner.Models
 
         public string Arg2 => _operationHandler.Arg2;
 
+        public void TargetHit()
+        {
+            CurrentState = State.TargetHit;
+            _operationHandler.Level = ++Level;
+            CurrentState = State.TargetNotFound;
+        }
+
+        public string _acceptedAnswer {get; protected set;};
+
         public void AcceptAnswer(string answer)
         {
             if (CurrentState == State.TargetFound)
             {
+                _acceptedAnswer = answer;
                 CurrentState = State.Shot;
-                System.Threading.Thread.Sleep(1000);
-                if (_operationHandler.AcceptAnswer(answer))
-                {
-                    CurrentState = State.TargetHit;
-                } else
-                {
-                    CurrentState = State.TargetFound;
-                }
+            }
+        }
+
+        public void GetShotResult()
+        {
+            if (_operationHandler.AcceptAnswer(_acceptedAnswer))
+            {
+                TargetHit();
+            } else
+            {
+                CurrentState = State.TargetFound;
             }
         }
 
@@ -104,11 +122,84 @@ namespace ArithmeticGunner.Models
             set {__internalLives = value; OnPropertyChanged("Lives");}
         }
 
+        protected DispatcherTimer _timer = new DispatcherTimer();
+
+        public Monitor()
+        {
+            _timer.Tick += new System.EventHandler(OnTimer);
+            _timer.Interval = new System.TimeSpan(0,0,1);
+        }
+
+        public int TimeoutSeconds {get; protected set;}
+
+        protected Random _randomGenerator = new Random();
+
+        void ResetTimeout()
+        {
+            switch(CurrentState)
+            {
+                case State.TargetNotFound:
+                    TimeoutSeconds = _randomGenerator.Next() % 10 + 1;
+                    break;
+                case State.TargetFound:
+                    TimeoutSeconds = _randomGenerator.Next() % 10 + 10;
+                    break;
+                default:
+                    TimeoutSeconds = 1;
+                    break;
+            }
+        }
+
         public void StartGame()
         {
             Lives = 10;
             Level = 1;
+            _operationHandler.Level = Level;
             CurrentState = State.TargetNotFound;
+            ResetTimeout();
+            _timer.Start();
+        }
+
+        public void NewTargetFound()
+        {
+            _operationHandler.PrepareValues();
+            CurrentState = State.TargetFound;
+            ResetTimeout();
+        }
+
+        public void WeGotHit()
+        {
+            if (--Lives > 0)
+            {
+                CurrentState = State.WeGotHit;
+                ResetTimeout();
+            } else{
+                CurrentState = State.GameOver;
+                _timer.Stop();
+            }
+        }
+
+        public void OnTimer(object? sender, System.EventArgs e)
+        {
+            --TimeoutSeconds;
+            switch(CurrentState)
+            {
+                case State.TargetNotFound:
+                    if (TimeoutSeconds == 0)
+                        NewTargetFound(); 
+                    break;
+                case State.TargetFound: 
+                    if (TimeoutSeconds == 0)
+                        WeGotHit(); 
+                    break;
+                case State.Shot: 
+                    GetShotResult(); 
+                    ResetTimeout();
+                    break;
+                default:
+                    ResetTimeout();
+                    break;
+            }
         }
 
     }
