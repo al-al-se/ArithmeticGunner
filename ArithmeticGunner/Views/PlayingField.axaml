@@ -2,10 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:ArithmeticGunner.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ArithmeticGunner.Views.PlayingField">
   
-  <Grid Background="Black">
+    <Design.DataContext>
+        <vm:PlayingField />
+    </Design.DataContext>
+
+  <Grid Background="Black" >
       <Grid.RowDefinitions>
           <RowDefinition/>
           <RowDefinition/>
@@ -24,15 +29,15 @@
       <TextBlock x:Name="arg1" 
         Grid.Row="0" Grid.Column="2" 
         HorizontalAlignment="Center" VerticalAlignment="Center"
-        Foreground="Yellow">
-        1
-      </TextBlock>
+        Foreground="Yellow" 
+        Text="{Binding Model.Arg1}"
+      />
       <TextBlock x:Name="operation" 
         Grid.Row="0" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
-        Foreground="Yellow">
-        *
-      </TextBlock>
+        Foreground="Yellow"
+        Text="{Binding Model.CurrentOperation}"
+      />
       <Image Source="/Assets/monitor.jpg" 
         Grid.Row="1" Grid.Column="1"
         Grid.ColumnSpan="3" Grid.RowSpan="3"
@@ -40,9 +45,9 @@
       <TextBlock x:Name="arg2" 
         Grid.Row="2" Grid.Column="4" 
         HorizontalAlignment="Left" VerticalAlignment="Center"
-        Foreground="Yellow">
-        2
-      </TextBlock>
+        Foreground="Yellow"
+        Text="{Binding Model.Arg2}"
+      />
       <TextBlock x:Name="=" 
         Grid.Row="3" Grid.Column="4" 
         Foreground="Yellow">
@@ -50,15 +55,17 @@
       </TextBlock>
       <Button x:Name="Shot" 
         Grid.Row="4" Grid.Column="3" 
-        HorizontalAlignment="Center" >
+        HorizontalAlignment="Center" 
+        Command="OnShotButtonPressed}"
+        >
           <Button.Content>
             <Image Source="/Assets/button.jpg" />
         </Button.Content>
       </Button>
       <TextBox x:Name="answer" 
         Grid.Row="4" Grid.Column="4" 
-        Foreground="Yellow">
-        2
+        Foreground="Yellow"
+        Text="{Binding Model.Answer}">
       </TextBox>
   </Grid>
 

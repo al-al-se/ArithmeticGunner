@@ -30,13 +30,15 @@ namespace ArithmeticGunner.Models
 
         string Arg2 {get;}
 
+        string Answer {get; set;}
+
         int Level {get;}
 
         int Lives {get;}
 
         void StartGame();
 
-        void AcceptAnswer(string answer);
+        void AcceptAnswer();
     }
 
     public class PlayingField : IPlayingField, INotifyPropertyChanged
@@ -83,20 +85,19 @@ namespace ArithmeticGunner.Models
             _operationHandler.Level = ++Level;
         }
 
-        public string _acceptedAnswer {get; protected set;}
+        public string Answer {get; set;}
 
-        public void AcceptAnswer(string answer)
+        public void AcceptAnswer()
         {
             if (CurrentState == State.TargetFound)
             {
-                _acceptedAnswer = answer;
                 CurrentState = State.Shot;
             }
         }
 
         public void GetShotResult()
         {
-            if (_operationHandler.AcceptAnswer(_acceptedAnswer))
+            if (_operationHandler.AcceptAnswer(Answer))
             {
                 TargetHit();
             } else

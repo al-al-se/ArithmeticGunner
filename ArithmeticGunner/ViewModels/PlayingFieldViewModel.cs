@@ -9,6 +9,11 @@ namespace ArithmeticGunner.ViewModels
             Model = new ArithmeticGunner.Models.PlayingField();
         }
 
-        public ArithmeticGunner.Models.IPlayingField Model { get; protected set;}
+        public ArithmeticGunner.Models.IPlayingField Model { get; protected init;}
+
+        public void OnShotButtonPressed()
+        {
+            
+        }
     }
 }
