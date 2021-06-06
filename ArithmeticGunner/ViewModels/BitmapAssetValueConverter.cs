@@ -1,10 +1,11 @@
 using System;
 using System.Globalization;
 using Avalonia.Data.Converters;
-using System.Drawing;
 using System.Reflection;
 using Avalonia.Platform;
 using Avalonia;
+using Avalonia.Media;
+using Avalonia.Media.Imaging;
 
 namespace ArithmeticGunner.ViewModels
 {
@@ -17,7 +18,9 @@ namespace ArithmeticGunner.ViewModels
             if (value == null)
                 return null;
 
-            if (value is string rawUri && targetType.IsAssignableFrom(typeof(Bitmap)))
+            if (value is string rawUri && 
+             (targetType.IsAssignableFrom(typeof(Bitmap)) || 
+                targetType.IsAssignableFrom(typeof(IImage))))
             {
                 Uri uri;
 
@@ -29,7 +32,7 @@ namespace ArithmeticGunner.ViewModels
                 else
                 {
                     string assemblyName = Assembly.GetEntryAssembly().GetName().Name;
-                    uri = new Uri($"avares://{assemblyName}{rawUri}");
+                    uri = new Uri($"avares://{assemblyName}/Assets/{rawUri}");
                 }
 
                 var assets = AvaloniaLocator.Current.GetService<IAssetLoader>();

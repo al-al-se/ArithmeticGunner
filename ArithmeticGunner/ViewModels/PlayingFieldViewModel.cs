@@ -19,7 +19,7 @@ namespace ArithmeticGunner.ViewModels
         protected bool ShotButtonPressed = false;
 
         public string ShotButtonImage => 
-                ShotButtonPressed ? "button_pressed.jpg" : "button.jpg";
+                ShotButtonPressed ? "button_pressed.bmp" : "button.bmp";
 
         public void OnShotButtonPressed()
         {
@@ -35,19 +35,19 @@ namespace ArithmeticGunner.ViewModels
                 switch(Model.CurrentState)
                 {
                     case ArithmeticGunner.Models.State.TargetFound:
-                        return "monitor_with_target.jpg";
+                        return "monitor_with_target.bmp";
                     case ArithmeticGunner.Models.State.TargetAttacts:
-                        return "monitor_attack.jpg"; 
+                        return "monitor_attack.bmp"; 
                     case ArithmeticGunner.Models.State.WeGotHit:
-                        return "monitor_we_got_hit.jpg"; 
+                        return "monitor_we_got_hit.bmp"; 
                     case ArithmeticGunner.Models.State.Shot:
-                        return "monitor_shot.jpg";
+                        return "monitor_shot.bmp";
                     case ArithmeticGunner.Models.State.TargetHit:
-                        return "monitor_target_hit.jpg";
+                        return "monitor_target_hit.bmp";
                     case ArithmeticGunner.Models.State.GameOver:
-                        return "game_over.jpg";
+                        return "game_over.bmp";
                     default:
-                        return "monitor.jpg";
+                        return "monitor.bmp";
                 }
             }
         }

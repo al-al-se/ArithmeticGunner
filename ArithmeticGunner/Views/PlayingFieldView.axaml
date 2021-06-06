@@ -65,7 +65,7 @@
       </Button>
       <TextBox x:Name="answer" 
         Grid.Row="4" Grid.Column="4" 
-        Foreground="Yellow"
+        Foreground="Red"
         Text="{Binding PlayingFieldInst.Model.Answer}">
       </TextBox>
   </Grid>
