@@ -7,10 +7,10 @@ public class UserContext : DbContext, IUserRepository
 {
     private DbSet<User> Users { get; set; }
 
-        public UserContext(DbContextOptions<UserContext> options)
-        : base(options)
+    public UserContext(DbContextOptions<UserContext> options)
+    : base(options)
     {
-            Database.EnsureCreated();
+        Database.EnsureCreated();
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
