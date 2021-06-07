@@ -6,11 +6,14 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="40"
              x:Class="ArithmeticGunner.Views.UserView">
     <StackPanel Orientation="Horizontal" Background="Black">
+    <TextBlock Foreground="Yellow"  Text="User:" HorizontalAlignment="Center"/>
     <TextBox x:Name="Login"
-      Foreground="Yellow">Enter your name</TextBox>
+      Foreground="Yellow"></TextBox>
+    <TextBlock Text="    "/>
     <Button x:Name="Start Game"
-      Foreground="Yellow">Start game</Button>
+      Foreground="Yellow" Background="DarkGreen">Start game</Button>
+    <TextBlock Text="    "/>
     <Button x:Name="Statistics"
-      Foreground="Yellow">Statistics</Button>
+      Foreground="Yellow" Background="DarkGreen">Statistics</Button>
     </StackPanel>
 </UserControl>
