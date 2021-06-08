@@ -14,7 +14,7 @@ namespace ArithmeticGunner.ViewModels
         {
             PlayingFieldInst = new PlayingFieldViewModel();
             UserVM = new UserViewModel();
-            PlayingFieldInst.StartGame();
+            PlayingFieldInst.GameOverWithLevel += UserVM.Save;
         }
     }
 }

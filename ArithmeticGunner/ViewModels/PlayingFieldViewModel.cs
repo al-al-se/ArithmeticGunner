@@ -28,6 +28,8 @@ namespace ArithmeticGunner.ViewModels
             this.WhenAnyValue(x => x.Model.CurrentState)
                             .Subscribe(x => MonitorImage = StateToMonitorImage(x));
 
+            Model.GameOver += OnGameOver;
+
             _timer.Tick += new System.EventHandler(OnTimer);
             _timer.Interval = new System.TimeSpan(0,0,1);
         }
@@ -45,6 +47,13 @@ namespace ArithmeticGunner.ViewModels
         public void OnTimer(object? sender, System.EventArgs e)
         {
             Model.OnTimer();
+        }
+
+        public event Action<int> GameOverWithLevel = null;
+
+        protected void OnGameOver()
+        {
+            GameOverWithLevel ?. Invoke(Model.Level);
         }
 
         protected string _arg1 = "1";
