@@ -33,6 +33,8 @@ namespace ArithmeticGunner.Models
         void AcceptAnswer(int answer);
 
         void OnTimer();
+
+        event Action GameOver;
     }
 
     public class PlayingFieldModel : ReactiveObject,  IPlayingField
@@ -114,6 +116,8 @@ namespace ArithmeticGunner.Models
             TimeoutSeconds = _randomGenerator.Next() % 20 + 20;           
         }
 
+        public event Action GameOver = null;
+
         public void WeGotHit()
         {
             if (--Lives > 0)
@@ -121,6 +125,7 @@ namespace ArithmeticGunner.Models
                 CurrentState = State.WeGotHit;
             } else{
                 CurrentState = State.GameOver;
+                GameOver ?. Invoke();
             }
         }
 

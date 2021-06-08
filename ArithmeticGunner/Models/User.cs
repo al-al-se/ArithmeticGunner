@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 public class User
 {
@@ -8,5 +9,5 @@ public class User
 
     public int Best {get; set;}
 
-    public int Average {get; set;}
+    public double Average {get; set;}
 }
