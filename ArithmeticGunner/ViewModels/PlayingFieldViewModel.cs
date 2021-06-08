@@ -44,6 +44,12 @@ namespace ArithmeticGunner.ViewModels
              _timer.Start();
         }
 
+        public void StopGame()
+        {
+             _timer.Stop();
+             OnGameOver();
+        }
+
         public void OnTimer(object? sender, System.EventArgs e)
         {
             Model.OnTimer();

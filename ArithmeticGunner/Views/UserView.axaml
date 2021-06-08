@@ -8,13 +8,19 @@
     <StackPanel Orientation="Horizontal" Background="Black">
     <TextBlock Foreground="Yellow"  Text="User:" HorizontalAlignment="Center"/>
     <TextBox x:Name="Login"
-      Foreground="Yellow"
+      Foreground="Green"
       Text="{Binding UserVM.Login}"></TextBox>
     <TextBlock Text="    "/>
     <Button x:Name="Start Game"
       Foreground="Yellow" Background="DarkGreen"
       Command="{Binding PlayingFieldInst.StartGame}">
       Start game
+    </Button>
+    <TextBlock Text="    "/>
+        <Button x:Name="Stop Game"
+      Foreground="Yellow" Background="DarkGreen"
+      Command="{Binding PlayingFieldInst.StopGame}">
+      Stop game
     </Button>
     <TextBlock Text="    "/>
     <Button x:Name="Statistics"
